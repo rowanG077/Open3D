@@ -21,6 +21,12 @@ set(STATIC_TBB_INCLUDE_DIR "${STATIC_MKL_INCLUDE_DIR}")
 set(STATIC_TBB_LIB_DIR "${STATIC_MKL_LIB_DIR}")
 set(STATIC_TBB_LIBRARIES tbb_static tbbmalloc_static)
 
+set_local_or_remote_url(
+    TBB_GIT_URL
+    LOCAL_URL   "${THIRD_PARTY_DOWNLOAD_DIR}/tbb"
+    REMOTE_URLS "https://anaconda.org/intel/mkl-include/2020.1/download/linux-64/mkl-include-2020.1-intel_217.tar.bz2"
+)
+
 # To generate a new patch, go inside TBB source folder:
 # 1. Checkout to a new branch
 # 2. Make changes, commit
@@ -29,10 +35,8 @@ set(STATIC_TBB_LIBRARIES tbb_static tbbmalloc_static)
 ExternalProject_Add(
     ext_tbb
     PREFIX tbb
-    GIT_REPOSITORY https://github.com/wjakob/tbb.git
-    GIT_TAG 141b0e310e1fb552bdca887542c9c1a8544d6503 # Sept 2020
+    URL ${TBB_GIT_URL}
     UPDATE_COMMAND ""
-    PATCH_COMMAND git checkout -f 141b0e310e1fb552bdca887542c9c1a8544d6503
     COMMAND git apply ${Open3D_3RDPARTY_DIR}/mkl/0001-Allow-selecttion-of-static-dynamic-MSVC-runtime.patch
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=${MKL_INSTALL_PREFIX}

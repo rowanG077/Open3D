@@ -278,8 +278,7 @@ function(set_local_or_remote_url URL)
         message(STATUS "Using local url: ${arg_LOCAL_URL}")
         set(${URL} "${arg_LOCAL_URL}" PARENT_SCOPE)
     else()
-        message(STATUS "Using remote url(s): ${arg_REMOTE_URLS}")
-        set(${URL} "${arg_REMOTE_URLS}" PARENT_SCOPE)
+        message(FATAL_ERROR "Could not find arg_LOCAL_URL: ${arg_LOCAL_URL}")
     endif()
 endfunction()
 
@@ -369,9 +368,11 @@ set(FLANN_TARGET "3rdparty_flann")
 list(APPEND Open3D_3RDPARTY_PRIVATE_TARGETS "${FLANN_TARGET}")
 
 # Nanoflann
-build_3rdparty_library(3rdparty_nanoflann DIRECTORY nanoflann INCLUDE_DIRS include/ INCLUDE_ALL)
+# build_3rdparty_library(3rdparty_nanoflann DIRECTORY nanoflann INCLUDE_DIRS include/ INCLUDE_ALL)
 set(NANOFLANN_TARGET "3rdparty_nanoflann")
 list(APPEND Open3D_3RDPARTY_PRIVATE_TARGETS "${NANOFLANN_TARGET}")
+list(APPEND include_dirs "${NANOFLAN_INCLUDE_DIR}")
+
 
 # GLEW
 if(USE_SYSTEM_GLEW)

@@ -5,11 +5,16 @@ include(ExternalProject)
 # FAISS_LIBRARIES can refer to libraries in the same directory.
 set(MKL_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/mkl_install)
 
+set_local_or_remote_url(
+    FAISS_GIT_URL
+    LOCAL_URL   "${THIRD_PARTY_DOWNLOAD_DIR}/faiss"
+    REMOTE_URLS "https://anaconda.org/intel/mkl-include/2020.1/download/linux-64/mkl-include-2020.1-intel_217.tar.bz2"
+)
+
 ExternalProject_Add(
     ext_faiss
     PREFIX faiss
-    GIT_REPOSITORY https://github.com/junha-l/faiss.git
-    GIT_TAG 954ada2cc1106bd8f20c0f99bff615e36c0053b1
+    URL ${FAISS_GIT_URL}
     UPDATE_COMMAND ""
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}

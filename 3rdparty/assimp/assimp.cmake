@@ -16,11 +16,16 @@ else()
     set(ASSIMP_BUILD_TYPE ${CMAKE_BUILD_TYPE})
 endif()
 
+set_local_or_remote_url(
+    ASSIMP_GIT_URL
+    LOCAL_URL   "${THIRD_PARTY_DOWNLOAD_DIR}/assimp"
+    REMOTE_URLS "https://anaconda.org/intel/mkl-include/2020.1/download/linux-64/mkl-include-2020.1-intel_217.tar.bz2"
+)
+
 ExternalProject_Add(
     ext_assimp
     PREFIX assimp
-    GIT_REPOSITORY https://github.com/assimp/assimp
-    GIT_TAG v5.0.1 # Jan 2020
+    URL ${ASSIMP_GIT_URL}
     UPDATE_COMMAND ""
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=${ASSIMP_BUILD_TYPE}

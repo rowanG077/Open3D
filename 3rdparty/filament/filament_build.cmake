@@ -2,14 +2,16 @@ include(ExternalProject)
 
 set(FILAMENT_ROOT "${CMAKE_BINARY_DIR}/filament-binaries")
 
-set(FILAMENT_GIT_REPOSITORY "https://github.com/intel-isl/filament.git")
-set(FILAMENT_GIT_TAG "release")
+set_local_or_remote_url(
+    FILAMENT_GIT_URL
+    LOCAL_URL   "${THIRD_PARTY_DOWNLOAD_DIR}/filament"
+    REMOTE_URLS "https://anaconda.org/intel/mkl-include/2020.1/download/linux-64/mkl-include-2020.1-intel_217.tar.bz2"
+)
 
 ExternalProject_Add(
     ext_filament
     PREFIX filament
-    GIT_REPOSITORY ${FILAMENT_GIT_REPOSITORY}
-    GIT_TAG ${FILAMENT_GIT_TAG}
+    URL ${FILAMENT_GIT_URL}
     UPDATE_COMMAND ""
     CMAKE_ARGS
         -DCMAKE_BUILD_TYPE=Release
